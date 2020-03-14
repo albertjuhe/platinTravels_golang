@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
@@ -19,6 +20,7 @@ func reverse(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	fmt.Println("Starttin websocket server al :5555")
 	http.HandleFunc("/reverse", reverse)
 	log.Fatal(http.ListenAndServe(":5555", nil))
 }
