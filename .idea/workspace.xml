@@ -9,9 +9,9 @@
   </component>
   <component name="GOROOT" path="$USER_HOME$/sdk/go1.12.9" />
   <component name="ProjectId" id="1Z7HtZZxQFEDoaKvgKPwpbaDSZU" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
