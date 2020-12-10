@@ -5,6 +5,7 @@ import (
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
+	"sync"
 )
 
 var upgrades = websocket.Upgrader{
@@ -22,14 +23,19 @@ func reader(conn *websocket.Conn) {
 func ping(w http.ResponseWriter, r *http.Request) {
 	upgrades.CheckOrigin = func(r *http.Request) bool {return true}
 
-	ws, _ := upgrades.Upgrade(w, r, nil)
+	ws, err := upgrades.Upgrade(w, r, nil)
+	if err != nil {
+		log.Println(err)
+	}
 	defer ws.Close()
 
 	reader(ws)
 }
 
 func alive(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "server is Alive")
+	//t:= template.NewTemplateHAndler("../../templates/chat.html")
+	//t.ServeHTTP(w,r)
+	fmt.Fprintf(w, "Home page")
 }
 
 func setupRoutes() {
@@ -37,8 +43,17 @@ func setupRoutes() {
 	http.HandleFunc("/", alive)
 }
 
+var doOnce sync.Once
+
+func startWebSocketServer(port string) {
+	doOnce.Do(func(){
+		log.Fatal(http.ListenAndServe(":" + port, nil))
+	})
+}
+
+
 func main() {
 	fmt.Println("Starting websocket server al :5555")
 	setupRoutes()
-	log.Fatal(http.ListenAndServe(":5555", nil))
+	startWebSocketServer("5555")
 }
